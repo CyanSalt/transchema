@@ -1,0 +1,52 @@
+{
+  "name": "transchema",
+  "version": "0.1.0-beta.0",
+  "description": "Transform JSON Schema definition into inline TypeScript type",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js"
+    }
+  },
+  "bin": "./dist/cli.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "eslint --fix './**/*.{js,ts}'",
+    "test": "vitest",
+    "prepack": "unbuild",
+    "release": "release-it --preRelease=beta --npm.tag=latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CyanSalt/transchema.git"
+  },
+  "keywords": [
+    "json-schema",
+    "typescript"
+  ],
+  "author": "CyanSalt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CyanSalt/transchema/issues"
+  },
+  "homepage": "https://github.com/CyanSalt/transchema#readme",
+  "devDependencies": {
+    "@cyansalt/eslint-config": "^4.3.1",
+    "@cyansalt/tsconfig": "^2.2.1",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "@types/lodash-es": "^4.17.12",
+    "eslint": "^9.27.0",
+    "release-it": "^19.0.2",
+    "typescript": "^5.8.3",
+    "unbuild": "^3.5.0",
+    "vitest": "^3.1.4"
+  },
+  "dependencies": {
+    "@types/json-schema": "^7.0.15"
+  }
+}
