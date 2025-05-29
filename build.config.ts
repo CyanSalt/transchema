@@ -1,14 +1,8 @@
 import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
-  entries: [
-    {
-      builder: 'mkdist',
-      input: './src',
-      outDir: './dist',
-      ext: 'js',
-    },
-  ],
+  entries: ['src/index'],
   clean: true,
   declaration: true,
+  externals: ['json-schema'],
 })
