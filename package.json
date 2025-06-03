@@ -1,6 +1,6 @@
 {
   "name": "transchema",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0-beta.3",
   "description": "Transform JSON Schema definition into inline TypeScript type",
   "type": "module",
   "main": "./dist/index.mjs",
