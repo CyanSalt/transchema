@@ -16,17 +16,19 @@ interface KeywordType extends BaseType {
 
 interface LiteralType extends BaseType {
   kind: 'literal',
-  literal: string | number | boolean,
+  literal: 'string' | 'number' | 'boolean',
 }
 
 interface UnionType extends BaseType {
   kind: 'union',
   elements: Type[],
+  literal: LiteralType['literal'] | undefined,
 }
 
 interface IntersectionType extends BaseType {
   kind: 'intersection',
   elements: Type[],
+  literal: LiteralType['literal'] | undefined,
 }
 
 interface SpreadType extends BaseType {
@@ -89,15 +91,15 @@ export function isNever(type: Type) {
   return isKeyword(type, 'never')
 }
 
-export function isLiteral(type: Type, literal: 'string' | 'number' | 'boolean') {
-  return type.kind === 'literal' && typeof type.literal === literal
+export function isLiteral(type: Type, literal: Extract<Type, { literal: unknown }>['literal']) {
+  return 'literal' in type && type.literal === literal
 }
 
 export function stringLiteral(value: string): Type {
   return {
     kind: 'literal',
     expression: `'${value.replace(/'/g, '\\\'')}'`,
-    literal: value,
+    literal: 'string',
   }
 }
 
@@ -105,7 +107,7 @@ export function unquotedLiteral(value: number | boolean): Type {
   return {
     kind: 'literal',
     expression: String(value),
-    literal: value,
+    literal: typeof value as 'number' | 'boolean',
   }
 }
 
@@ -245,6 +247,20 @@ function mergeRecordTypes(types: Type[]) {
   }
 }
 
+function mergeLiteral(types: Type[]) {
+  if (!types.length) {
+    return undefined
+  }
+  const first = types[0]
+  if ('literal' in first) {
+    const literal = first.literal
+    if (types.every(type => isLiteral(type, literal))) {
+      return literal
+    }
+  }
+  return undefined
+}
+
 export function intersectionOf(types: Type[]): Type {
   types = uniqueTypes(flattenElements(types, 'intersection'))
   if (types.some(type => isNever(type))) {
@@ -271,6 +287,7 @@ export function intersectionOf(types: Type[]): Type {
     kind: 'intersection',
     expression: types.map(type => enclose(type, 'intersection')).join(' & '),
     elements: types,
+    literal: mergeLiteral(types),
   }
 }
 
@@ -299,6 +316,7 @@ export function unionOf(types: Type[]): Type {
     kind: 'union',
     expression: types.map(type => enclose(type, 'union')).join(' | '),
     elements: types,
+    literal: mergeLiteral(types),
   }
 }
 

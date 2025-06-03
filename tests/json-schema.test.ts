@@ -388,4 +388,13 @@ describe('Other cases', () => {
     ).toBe('unknown')
   })
 
+  test('literal intersection', () => {
+    expect(
+      transform({
+        type: 'string',
+        enum: ['foo', 'bar'],
+      }),
+    ).toBe(`'foo' | 'bar'`)
+  })
+
 })
