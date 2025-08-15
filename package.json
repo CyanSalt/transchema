@@ -38,7 +38,6 @@
     "@cyansalt/eslint-config": "^4.3.1",
     "@cyansalt/tsconfig": "^2.2.1",
     "@release-it/conventional-changelog": "^10.0.1",
-    "@types/lodash-es": "^4.17.12",
     "eslint": "^9.27.0",
     "release-it": "^19.0.2",
     "typescript": "^5.8.3",
