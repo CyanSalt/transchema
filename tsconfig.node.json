@@ -1,14 +1,14 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "@cyansalt/tsconfig",
   "compilerOptions": {
-    "outDir": ".typescript"
+    "composite": true
   },
   "include": [
+    "tests",
     "*.config.js",
     "*.config.ts"
   ],
-  "exclude": [
-    "**/dist",
-    "**/node_modules"
-  ]
+  "references": [
+    { "path": "./tsconfig.lib.json" }
+  ],
 }
